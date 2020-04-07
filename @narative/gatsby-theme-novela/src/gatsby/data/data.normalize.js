@@ -65,7 +65,7 @@ module.exports.local = {
 };
 
 module.exports.contentful = {
-  articles: ({ node: article }) => {
+  articles: ({ node: article }, basePath) => {
     const author = article.author.reduce((curr, next, index, array) => {
       if (array.length === 1) {
         return next.name;
@@ -77,7 +77,7 @@ module.exports.contentful = {
     return {
       ...article,
       author,
-      slug: article.fields.slug,
+      slug: basePath + '/' + article.slug,
       body: article.body.childMdx.body,
       timeToRead: article.body.childMdx.timeToRead,
     };
