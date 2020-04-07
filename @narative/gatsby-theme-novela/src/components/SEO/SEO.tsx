@@ -45,6 +45,7 @@ const seoQuery = graphql`
             }
             siteUrl
             title
+            blogTitle
           }
         }
       }
@@ -86,7 +87,7 @@ const SEO: React.FC<HelmetProps> = ({
     path ? `${site.siteUrl}${path}` : site.siteUrl;
 
   // Checks if the source of the image is hosted on Contentful
-  if(`${image}`.includes('ctfassets')) {
+  if (`${image}`.includes('ctfassets')) {
     image = `https:${image}`;
   } else {
     image = fullURL(image);
@@ -109,14 +110,14 @@ const SEO: React.FC<HelmetProps> = ({
       name: 'theme-color',
       content: '#fff',
     },
-    { itemprop: 'name', content: title || site.title },
+    { itemprop: 'name', content: title + " | " + site.blogTitle || site.blogTitle },
     { itemprop: 'description', content: description || site.description },
     { itemprop: 'image', content: image },
     { name: 'description', content: description || site.description },
 
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:site', content: site.name },
-    { name: 'twitter:title', content: title || site.title },
+    { name: 'twitter:title', content: title + " | " + site.blogTitle || site.blogTitle },
     { name: 'twitter:description', content: description || site.description },
     { name: 'twitter:creator', content: twitter.url },
     {
@@ -124,7 +125,7 @@ const SEO: React.FC<HelmetProps> = ({
       content: image,
     },
 
-    { property: 'og:title', content: title || site.title },
+    { property: 'og:title', content: title + " | " + site.blogTitle || site.blogTitle },
     { property: 'og:url', content: url },
     { property: 'og:image', content: image },
     { property: 'og:description', content: description || site.description },
@@ -142,7 +143,7 @@ const SEO: React.FC<HelmetProps> = ({
 
   return (
     <Helmet
-      title={title || site.title}
+      title={title ? title + " | " + site.blogTitle : site.blogTitle}
       htmlAttributes={{ lang: 'en' }}
       script={themeUIDarkModeWorkaroundScript}
       meta={metaTags}
