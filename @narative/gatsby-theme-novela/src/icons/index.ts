@@ -15,6 +15,8 @@ import Patreon from './social/Patreon.Icon';
 import Paypal from './social/Paypal.Icon';
 import DigitalOcean from './social/DigitalOcean.Icon';
 import TripAdvisor from './social/TripAdvisor.Icon';
+import Mail from './social/Mail.Icon';
+import Reddit from './social/Reddit.Icon';
 
 // UI
 import ChevronLeft from './ui/ChevronLeft.Icon';
@@ -44,6 +46,8 @@ export default {
   Paypal,
   DigitalOcean,
   TripAdvisor,
+  Mail,
+  Reddit,
 
   ChevronLeft,
   Copied,
