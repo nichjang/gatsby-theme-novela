@@ -89,6 +89,10 @@ const SocialIconContainer = styled.a`
   max-width: 24px;
   display: inherit;
 
+  ${mediaqueries.phablet`
+    margin-left: 2rem;
+  `}
+
   &:hover {
     svg {
       &:hover * {
@@ -129,4 +133,3 @@ const Hidden = styled.span`
   overflow: hidden;
   display: inline-block;
 `;
-

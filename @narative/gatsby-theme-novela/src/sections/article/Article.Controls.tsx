@@ -139,6 +139,10 @@ const IconWrapper = styled.button`
       opacity: 0.5;
     }
   `}
+
+  ${mediaqueries.phablet`
+    margin-left: 2rem;
+  `}
 `;
 
 // This is based off a codepen! Much appreciated to: https://codepen.io/aaroniker/pen/KGpXZo
