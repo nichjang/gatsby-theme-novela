@@ -86,7 +86,7 @@ const SocialIconContainer = styled.a`
   position: relative;
   margin-left: 3.2rem;
   text-decoration: none;
-  max-width: 16px;
+  max-width: 24px;
   display: inherit;
 
   &:hover {
