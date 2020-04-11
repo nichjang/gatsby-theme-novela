@@ -15,10 +15,10 @@ import Patreon from './social/Patreon.Icon';
 import Paypal from './social/Paypal.Icon';
 import DigitalOcean from './social/DigitalOcean.Icon';
 import TripAdvisor from './social/TripAdvisor.Icon';
-import MailLarge from './social/Mail.Large.Icon';
-import TwitterLarge from './social/Twitter.Large.Icon';
-import FacebookLarge from './social/Facebook.Large.Icon';
-import LinkedinLarge from './social/Linkedin.Large.Icon';
+import MailLarge from './social/Mail.Icon.Large';
+import TwitterLarge from './social/Twitter.Icon.Large';
+import FacebookLarge from './social/Facebook.Icon.Large';
+import LinkedinLarge from './social/Linkedin.Icon.Large';
 
 
 // UI
