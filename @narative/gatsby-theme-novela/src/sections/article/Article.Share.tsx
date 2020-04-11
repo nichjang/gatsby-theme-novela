@@ -18,7 +18,7 @@ const ArticleShare: React.FC<ArticleShareProps> = ({ title }) => {
         <Icons.TwitterLarge fill={"#73737D"} width="18px" height="15px" />
       </ReferralLink>
       <ReferralLink share={share.linkedin}>
-        <Icons.LinkedInLarge fill={"#73737D"} width="16px" height="16px" />
+        <Icons.LinkedinLarge fill={"#73737D"} width="16px" height="16px" />
       </ReferralLink>
       <ReferralLink share={share.facebook}>
         <Icons.FacebookLarge fill={"#73737D"} width="16px" height="16px" />
@@ -49,7 +49,7 @@ function ReferralLink({ share, children }) {
       href={share}
       onClick={handleClick}
     >
-      <Hidden>Share the selected text</Hidden>
+      <Hidden>Share the article</Hidden>
       {children}
     </SocialIconContainer>
   );
