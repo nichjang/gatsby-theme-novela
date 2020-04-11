@@ -39,27 +39,7 @@ const ShareDarkModeOnIcon: React.FC<{}> = () => (
   </svg>
 );
 
-const DarkModeToggle: React.FC<{}> = () => {
-  const [colorMode, setColorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
-
-  function toggleColorMode(event) {
-    event.preventDefault();
-    setColorMode(isDark ? `light` : `dark`);
-  }
-
-  return (
-    <IconWrapper
-      onClick={toggleColorMode}
-      aria-label="Toggle dark and light mode"
-    >
-      <MoonOrSun isDark={isDark} />
-      <MoonMask isDark={isDark} />
-    </IconWrapper>
-  );
-};
-
-const SharePageButton: React.FC<{}> = () => {
+export const SharePageButton: React.FC<{}> = () => {
   const [hasCopied, setHasCopied] = useState<boolean>(false);
   const [colorMode] = useColorMode();
   const isDark = colorMode === `dark`;
@@ -95,7 +75,6 @@ const ArticleControls: React.FC<{}> = () => {
   return (
     <NavControls>
       <SharePageButton />
-      <DarkModeToggle />
     </NavControls>
   );
 };
@@ -146,7 +125,7 @@ const IconWrapper = styled.button`
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s ease;
-  margin-left: 30px;
+  margin-left: 3.2rem;
 
   &:hover {
     opacity: 1;
@@ -155,8 +134,6 @@ const IconWrapper = styled.button`
   ${mediaqueries.tablet`
     display: inline-flex;
     transform: scale(0.9);
-    margin: 0 15px;
-
 
     &:hover {
       opacity: 0.5;

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import throttle from "lodash/throttle";
 import { graphql, useStaticQuery } from "gatsby";
+import { Disqus } from 'gatsby-plugin-disqus';
 
 import Layout from "@components/Layout";
 import MDXRenderer from "@components/MDX";
@@ -14,7 +15,6 @@ import { debounce } from "@utils";
 
 import ArticleAside from "../sections/article/Article.Aside";
 import ArticleHero from "../sections/article/Article.Hero";
-import ArticleControls from "../sections/article/Article.Controls";
 import ArticlesNext from "../sections/article/Article.Next";
 import ArticleSEO from "../sections/article/Article.SEO";
 import ArticleShare from "../sections/article/Article.Share";
@@ -28,6 +28,7 @@ const siteQuery = graphql`
         node {
           siteMetadata {
             name
+            siteUrl
           }
         }
       }
@@ -43,8 +44,15 @@ const Article: Template = ({ pageContext, location }) => {
 
   const results = useStaticQuery(siteQuery);
   const name = results.allSite.edges[0].node.siteMetadata.name;
+  const siteUrl = results.allSite.edges[0].node.siteMetadata.siteUrl;
 
   const { article, authors, mailchimp, next } = pageContext;
+
+  const disqusConfig = {
+    url: `${siteUrl + location.pathname}`,
+    identifier: article.id,
+    title: article.title,
+  }
 
   useEffect(() => {
     const calculateBodySize = throttle(() => {
@@ -78,7 +86,7 @@ const Article: Template = ({ pageContext, location }) => {
     window.addEventListener("resize", calculateBodySize);
 
     return () => window.removeEventListener("resize", calculateBodySize);
-  }, []);
+  }, [hasCalculated]);
 
   return (
     <Layout>
@@ -88,14 +96,11 @@ const Article: Template = ({ pageContext, location }) => {
       <ArticleAside contentHeight={contentHeight}>
         <Progress contentHeight={contentHeight} />
       </ArticleAside>
-      <MobileControls>
-        <ArticleControls />
-      </MobileControls>
       <ArticleBody ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
         </MDXRenderer>
       </ArticleBody>
-      {mailchimp && article.subscription && <Subscription />}
+      {mailchimp && <Subscription />}
       {next.length > 0 && (
         <NextArticle narrow>
           <FooterNext>More articles from {name}</FooterNext>
@@ -103,26 +108,28 @@ const Article: Template = ({ pageContext, location }) => {
           <FooterSpacer />
         </NextArticle>
       )}
+      <Comments>
+        <Disqus config={disqusConfig} />
+      </Comments>
     </Layout>
   );
 };
 
 export default Article;
 
-const MobileControls = styled.div`
-  position: relative;
-  padding-top: 60px;
-  transition: background 0.2s linear;
-  text-align: center;
+const Comments = styled.div`
+  padding: 0 4rem 2rem 4rem;
+  max-width: 1220px;
+  margin: auto;
 
-  ${mediaqueries.tablet_up`
-    display: none;
+  ${mediaqueries.phablet`
+    padding:  0 20px;
   `}
 `;
 
 const ArticleBody = styled.article`
   position: relative;
-  padding: 160px 0 35px;
+  padding: 80px 0 35px;
   padding-left: 68px;
   transition: background 0.2s linear;
 
@@ -131,11 +138,11 @@ const ArticleBody = styled.article`
   `}
   
   ${mediaqueries.tablet`
-    padding: 70px 0 80px;
+    padding: 35px 0 80px;
   `}
 
   ${mediaqueries.phablet`
-    padding: 60px 0;
+    padding: 30px 0;
   `}
 `;
 

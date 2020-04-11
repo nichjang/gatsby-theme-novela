@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/core';
 
 import Icons from '@icons';
-
+import mediaqueries from '@styles/media';
+import { SharePageButton } from './Article.Controls';
 
 interface ArticleShareProps {
   title: string
@@ -13,30 +13,29 @@ const ArticleShare: React.FC<ArticleShareProps> = ({ title }) => {
   const share = generateShare(title);
 
   return (
-    <div>
-      <MenuText>Share: </MenuText>
-      <ReferralLink disabled={false} share={share.twitter}>
-        <Icons.Twitter fill={"black"} width="18px" height="15px" />
+    <ShareWrapper>
+      <ReferralLink share={share.twitter}>
+        <Icons.TwitterLarge fill={"#73737D"} width="18px" height="15px" />
       </ReferralLink>
-      <ReferralLink disabled={false} share={share.linkedin}>
-        <Icons.LinkedIn fill={"black"} width="16px" height="16px" />
+      <ReferralLink share={share.linkedin}>
+        <Icons.LinkedInLarge fill={"#73737D"} width="16px" height="16px" />
       </ReferralLink>
-      <ReferralLink disabled={false} share={share.facebook}>
-        <Icons.Facebook fill={"black"} width="16px" height="16px" />
+      <ReferralLink share={share.facebook}>
+        <Icons.FacebookLarge fill={"#73737D"} width="16px" height="16px" />
       </ReferralLink>
-      <ReferralLink disabled={false} share={share.mail}>
-        <Icons.Mail fill={"black"} width="16px" height="16px" />
+      <ReferralLink share={share.mail}>
+        <Icons.MailLarge fill={"#73737D"} width="16px" height="16px" />
       </ReferralLink>
-    </div>
+      <SharePageButton />
+    </ShareWrapper>
   );
 };
 
 export default ArticleShare;
 
-function ReferralLink({ disabled, share, children }) {
+function ReferralLink({ share, children }) {
   function handleClick(event) {
     event.preventDefault();
-    if (disabled) return;
 
     window.open(
       share,
@@ -46,14 +45,13 @@ function ReferralLink({ disabled, share, children }) {
   }
 
   return (
-    <MenuShare
-      href={disabled ? '' : share}
+    <SocialIconContainer
+      href={share}
       onClick={handleClick}
-      disabled={disabled}
     >
       <Hidden>Share the selected text</Hidden>
       {children}
-    </MenuShare>
+    </SocialIconContainer>
   );
 }
 
@@ -68,49 +66,67 @@ function generateShare(title: string) {
   };
 }
 
-const popUpwards = keyframes`
-  0% {
-    transform:matrix(.97,0,0,1,0,12);
-    opacity:0
+const ShareWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 80px;
+  
+  ${mediaqueries.tablet`
+    padding-top: 45px;
+  `}
+
+  ${mediaqueries.phablet`
+    padding-top: 40px;
+  `}
+`;
+
+
+const SocialIconContainer = styled.a`
+  position: relative;
+  margin-left: 3.2rem;
+  text-decoration: none;
+  max-width: 16px;
+  display: inherit;
+
+  &:hover {
+    svg {
+      &:hover * {
+        fill: ${p => p.theme.colors.primary};
+      }
+      * {
+        transition: fill 0.25s var(--ease-in-out-quad);
+      }
+    }
   }
-  20% {
-    transform:matrix(.99,0,0,1,0,2);
-    opacity:.7
+
+  &:first-of-type {
+    margin-left: 0;
   }
-  40% {
-    transform:matrix(1,0,0,1,0,-1);
-    opacity:1
+
+  &:last-child {
+    margin-right: 0;
   }
-  70% {
-    transform:matrix(1,0,0,1,0,0);
-    opacity:1
-  }
-  100% {
-    transform:matrix(1,0,0,1,0,0);
-    opacity:1
+
+  &[data-a11y='true']:focus::after {
+    content: '';
+    position: absolute;
+    left: -50%;
+    top: -20%;
+    width: 200%;
+    height: 160%;
+    border: 2px solid ${p => p.theme.colors.accent};
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 5px;
   }
 `;
 
-const MenuText = styled.span`
-  margin-right: 11px;
-`;
-
-const Hidden = styled.div`
+const Hidden = styled.span`
   width: 0px;
   height: 0px;
   visibility: hidden;
   opacity: 0;
+  overflow: hidden;
+  display: inline-block;
 `;
 
-const MenuShare = styled.a<{ disabled: boolean }>`
-  display: flex;
-  align-items: center;
-  padding: 16px 11px;
-  cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
-
-  svg {
-    path {
-      fill: ${p => (p.disabled ? '#F89797' : '')};
-    }
-  }
-`;
