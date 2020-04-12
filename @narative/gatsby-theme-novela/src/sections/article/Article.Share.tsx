@@ -34,20 +34,11 @@ const ArticleShare: React.FC<ArticleShareProps> = ({ title }) => {
 export default ArticleShare;
 
 function ReferralLink({ share, children }) {
-  function handleClick(event) {
-    event.preventDefault();
-
-    window.open(
-      share,
-      '',
-      'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600',
-    );
-  }
 
   return (
     <SocialIconContainer
       href={share}
-      onClick={handleClick}
+      target='_blank'
     >
       <Hidden>Share the article</Hidden>
       {children}
