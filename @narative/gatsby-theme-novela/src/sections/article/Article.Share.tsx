@@ -56,7 +56,10 @@ function ReferralLink({ share, children }) {
 }
 
 function generateShare(title: string) {
-  const url = window ? window.location.href : '';
+  let url = '';
+  if (typeof window !== `undefined`) {
+    url = window.location.href;
+  }
 
   return {
     twitter: `https://twitter.com/intent/tweet?text="${title}" — ${url}`,
